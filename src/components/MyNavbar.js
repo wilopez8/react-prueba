@@ -1,29 +1,36 @@
-import React from 'react';
-import Navbar from 'react-bootstrap/Navbar';
+import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
-const MyNavbar = () => {
+function NavbarDarkExample() {
   return (
-    <Navbar bg="dark" variant="dark" expand="sm" sticky="top">
-      <Navbar.Brand href="#">BootstrapCreative</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto">
-          <Nav.Link href="../../homepage/layout/" target="_blank" rel="noopener noreferrer">Visit Site</Nav.Link>
-          <Nav.Link href="#">Link</Nav.Link>
-          <Nav.Link href="#">Link</Nav.Link>
-          <Nav.Link><i className="fa fa-bell text-warning" aria-hidden="true"></i> <span className="badge-pill badge-danger text-light">3</span></Nav.Link>
-          <NavDropdown title={<img src="https://secure.gravatar.com/avatar/38eff4a7ab7f391783f71ccb38508df6?s=30" alt="" className="rounded-circle"/>} id="basic-nav-dropdown">
-            <NavDropdown.Item href="#">Edit My Profile</NavDropdown.Item>
-            <NavDropdown.Item href="#">Log Out</NavDropdown.Item>
-            <NavDropdown.Item href="#">Help</NavDropdown.Item>
-          </NavDropdown>
-        </Nav>
-      </Navbar.Collapse>
+    <Navbar variant="dark" bg="dark" expand="lg">
+      <Container fluid>
+        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbar-dark-example" />
+        <Navbar.Collapse id="navbar-dark-example">
+          <Nav>
+            <NavDropdown
+              id="nav-dropdown-dark-example"
+              title="Dropdown"
+              menuVariant="dark"
+            >
+              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">
+                Another action
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">
+                Separated link
+              </NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
     </Navbar>
   );
-};
+}
 
-export default MyNavbar;
+export default NavbarDarkExample;
