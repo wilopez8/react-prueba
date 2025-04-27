@@ -1,0 +1,16 @@
+/* Ensure the table is scrollable on smaller screens */
+.table-responsive {
+    overflow-x: auto;
+  }
+  
+  /* Adjust font size for smaller screens */
+  @media (max-width: 768px) {
+    .table {
+      font-size: 0.8rem;
+    }
+  }
+  
+  /* Add padding to the tabs for better spacing */
+  .nav-tabs {
+    margin-bottom: 20px;
+  }

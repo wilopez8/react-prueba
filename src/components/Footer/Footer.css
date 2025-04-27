@@ -1,0 +1,17 @@
+.app-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem; /* Smaller font size */
+    background-color: #f8f9fa; /* Light background color */
+    padding: 10px 0;
+    border-top: 1px solid #e7e7e7; /* Optional: subtle border at the top */
+    color: #6c757d; /* Muted text color */
+  }
+  
+  @media (max-width: 768px) {
+    .app-footer {
+      font-size: 0.8rem; /* Even smaller font size for smaller screens */
+    }
+  }
