@@ -1,33 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, InputGroup, Button } from 'react-bootstrap';
+import { Form, InputGroup, Button } from 'react-bootstrap';
 import './FilterBar.css'; // Import the updated CSS
 
 const FilterBar = ({ filters, searchPlaceholder, onFilterChange, onSearchChange, searchValue }) => {
   return (
-    <Row className="filter-bar mb-3">
+    <div className="filter-bar">
       {/* Dropdown Filters */}
       {filters.map((filter, index) => (
-        <Col md={4} key={index} className="filter-item">
-          <div className="filter-inline">
-            <Form.Label className="filter-label">{filter.label}</Form.Label>
-            <Form.Select
-              value={filter.value}
-              onChange={(e) => onFilterChange(filter.name, e.target.value)}
-              className="filter-dropdown"
-            >
-              {filter.options.map((option, idx) => (
-                <option key={idx} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </Form.Select>
-          </div>
-        </Col>
+        <div key={index} className="filter-item">
+          <Form.Label className="filter-label">{filter.label}</Form.Label>
+          <Form.Select
+            value={filter.value}
+            onChange={(e) => onFilterChange(filter.name, e.target.value)}
+            className="filter-dropdown"
+          >
+            {filter.options.map((option, idx) => (
+              <option key={idx} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </Form.Select>
+        </div>
       ))}
 
       {/* Search Bar */}
-      <Col md={8}>
+      <div className="search-bar">
         <InputGroup>
           <Form.Control
             type="text"
@@ -37,8 +35,8 @@ const FilterBar = ({ filters, searchPlaceholder, onFilterChange, onSearchChange,
           />
           <Button variant="primary">Search</Button>
         </InputGroup>
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 };
 
