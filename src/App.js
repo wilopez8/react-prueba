@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import HomePage from './pages/HomePage';
+import Dashboard from './pages/Dashboard/Dashboard';
 import NotFoundPage from './pages/NotFoundPage';
 import AgendaPage from './pages/AgendaPage/AgendaPage';
 import ClientsPage from './pages/ClientsPage';
@@ -16,7 +16,7 @@ function App() {
       <Header />
       <div className="container mt-3">
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/agenda" element={<AgendaPage />} />
           <Route path="/clients" element={<ClientsPage />} />
           <Route path="*" element={<NotFoundPage />} />

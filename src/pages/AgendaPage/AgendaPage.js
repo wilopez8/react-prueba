@@ -11,13 +11,13 @@ const AgendaPage = () => {
   const [activeTab, setActiveTab] = useState('agenda');
 
   const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
+    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+    'Julio', 'Agost', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
   ];
 
   const years = Array.from({ length: 10 }, (_, i) => 2025 - i); // Generate last 10 years
 
-  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const daysOfWeek = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
 
   const handleYearChange = (e) => {
     setSelectedYear(e.target.value);
@@ -79,7 +79,7 @@ const AgendaPage = () => {
           {/* Filters */}
           <div className="filters">
             <Form.Group controlId="yearFilter" className="filter-group">
-              <Form.Label>Year</Form.Label>
+              <Form.Label>Año</Form.Label>
               <Form.Control
                 as="select"
                 value={selectedYear}
@@ -94,13 +94,13 @@ const AgendaPage = () => {
             </Form.Group>
 
             <Form.Group controlId="monthFilter" className="filter-group">
-              <Form.Label>Month</Form.Label>
+              <Form.Label>Mes</Form.Label>
               <Form.Control
                 as="select"
                 value={selectedMonth}
                 onChange={handleMonthChange}
               >
-                <option value="">Select a Month</option>
+                <option value="">Seleccione el mes</option>
                 {months.map((month, index) => (
                   <option key={index} value={month}>
                     {month}
@@ -113,19 +113,19 @@ const AgendaPage = () => {
           {renderCalendar()}
           {selectedDay && (
             <div className="selected-day-table">
-              <h3>Services for {selectedDay}</h3>
+              <h3>Servicios: {selectedDay}</h3>
               <AgendaTable />
               <Button onClick={handleClear} style={{ marginTop: '20px' }}>
-                Clear
+                Borrar Selección
               </Button>
             </div>
           )}
         </Tab>
 
         {/* Service History Tab */}
-        <Tab eventKey="history" title="Service History">
+        <Tab eventKey="history" title="Servicios Anteriores">
           <div className="service-history">
-            <h3>Service History</h3>
+            <h3>Servicios Pasados</h3>
             <p>Here you can display a table or list of past services.</p>
             {/* Add your service history table or content here */}
           </div>

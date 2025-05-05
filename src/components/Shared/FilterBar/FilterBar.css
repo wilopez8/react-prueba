@@ -1,0 +1,29 @@
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Reduce space between filters and search bar */
+    flex-wrap: nowrap; /* Prevent wrapping to the next line */
+  }
+  
+  .filter-item {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Reduce space between label and dropdown */
+    min-width: 150px; /* Reduce minimum width */
+  }
+  
+  .filter-label {
+    margin: 0;
+    font-weight: bold;
+    font-size: 0.9rem;
+    white-space: nowrap; /* Prevent label text from wrapping */
+  }
+  
+  .filter-dropdown {
+    flex: 1;
+  }
+  
+  .search-bar {
+    flex: 2; /* Make the search bar wider */
+    min-width: 250px; /* Reduce minimum width */
+  }

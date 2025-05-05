@@ -1,0 +1,52 @@
+.dashboard-container {
+  padding: 20px;
+}
+
+.metric-card {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.metric-card h5 {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #495057;
+}
+
+.metric-card p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.filters {
+  margin-bottom: 20px;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  text-align: center;
+}
+
+.table td {
+  text-align: center;
+}
+
+.badge-success {
+  background-color: #28a745 !important;
+}
+
+.badge-warning {
+  background-color: #ffc107 !important;
+}
+
+.badge-info {
+  background-color: #17a2b8 !important;
+}
+
+.badge-danger {
+  background-color: #dc3545 !important;
+}

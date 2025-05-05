@@ -6,7 +6,7 @@ const NotFoundPage = () => {
   const navigate = useNavigate();
 
   const goToHomePage = () => {
-    navigate('/');
+    navigate('/'); // Adjust the path to your home page
   };
 
   return (

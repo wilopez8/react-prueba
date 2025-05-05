@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, Tab, Tabs } from 'react-bootstrap';
+import FilterBar from '../Shared/FilterBar/FilterBar'; // Import the reusable FilterBar component
 import './ClientsTable.css';
 
 const ClientsTable = () => {
@@ -31,90 +32,60 @@ const ClientsTable = () => {
       horarioProgramacion: '9:00 AM - 1:00 PM',
       observacionAtencion: 'Customer prefers morning hours',
     },
+    // Add more client objects as needed
+  ];
+
+  // State for filters and search
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+
+  // Filter options for each tab
+  const filters = [
     {
-      id: 2,
-      nombres: 'Jane',
-      apellidos: 'Smith',
-      email: 'jane.smith@example.com',
-      telefono: '987-654-3210',
-      tipoCliente: 'Premium',
-      medioPago: 'PayPal',
-      estadoCliente: 'Active',
-      descripcionTipoCliente: 'High-value customer',
-      ultimaActualizacion: '2023-03-15',
-      direccion: '456 Elm St',
-      ciudad: 'Los Angeles',
-      estado: 'CA',
-      pbx: '987-654-321',
-      googleMaps: 'https://maps.google.com',
-      frecuenciaServicio: 'Bi-weekly',
-      horasContratadas: '6',
-      valorServicio: '$200',
-      indicacionesServicio: 'Deliver to the back door',
-      claveConjuntos: '5678',
-      clavesResidencia: '1234',
-      comoIngresar: 'Ring the bell',
-      horarioProgramacion: '10:00 AM - 4:00 PM',
-      observacionAtencion: 'Prefers afternoon hours',
-    },
-    {
-      id: 3,
-      nombres: 'Alice',
-      apellidos: 'Johnson',
-      email: 'alice.johnson@example.com',
-      telefono: '456-789-1234',
-      tipoCliente: 'Regular',
-      medioPago: 'Bank Transfer',
-      estadoCliente: 'Inactive',
-      descripcionTipoCliente: 'Occasional customer',
-      ultimaActualizacion: '2023-02-20',
-      direccion: '789 Pine St',
-      ciudad: 'Chicago',
-      estado: 'IL',
-      pbx: '456-789-123',
-      googleMaps: 'https://maps.google.com',
-      frecuenciaServicio: 'Monthly',
-      horasContratadas: '3',
-      valorServicio: '$75',
-      indicacionesServicio: 'Leave at the front desk',
-      claveConjuntos: '9101',
-      clavesResidencia: '1121',
-      comoIngresar: 'Use the main entrance',
-      horarioProgramacion: '8:00 AM - 11:00 AM',
-      observacionAtencion: 'Prefers early morning hours',
-    },
-    {
-      id: 4,
-      nombres: 'Bob',
-      apellidos: 'Brown',
-      email: 'bob.brown@example.com',
-      telefono: '789-123-4567',
-      tipoCliente: 'VIP',
-      medioPago: 'Cash',
-      estadoCliente: 'Active',
-      descripcionTipoCliente: 'Loyal customer',
-      ultimaActualizacion: '2023-01-10',
-      direccion: '321 Oak St',
-      ciudad: 'Houston',
-      estado: 'TX',
-      pbx: '789-123-456',
-      googleMaps: 'https://maps.google.com',
-      frecuenciaServicio: 'Weekly',
-      horasContratadas: '8',
-      valorServicio: '$300',
-      indicacionesServicio: 'Call before arriving',
-      claveConjuntos: '3344',
-      clavesResidencia: '5566',
-      comoIngresar: 'Enter through the garage',
-      horarioProgramacion: '2:00 PM - 6:00 PM',
-      observacionAtencion: 'Prefers weekends',
+      name: 'status',
+      label: 'Estado del Cliente',
+      value: statusFilter,
+      options: [
+        { value: 'all', label: 'Todos' },
+        { value: 'active', label: 'Activo' },
+        { value: 'inactive', label: 'Inactivo' },
+      ],
     },
   ];
+
+  // Handlers for filter and search
+  const handleFilterChange = (filterName, value) => {
+    if (filterName === 'status') {
+      setStatusFilter(value);
+    }
+  };
+
+  const handleSearchChange = (value) => {
+    setSearchQuery(value);
+  };
+
+  // Filtered data for each tab
+  const filteredClients = clients.filter((client) => {
+    const matchesStatus =
+      statusFilter === 'all' || client.estadoCliente.toLowerCase() === statusFilter;
+    const matchesSearch =
+      client.nombres.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      client.apellidos.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      client.email.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesStatus && matchesSearch;
+  });
 
   return (
     <Tabs defaultActiveKey="info" id="clients-tabs" className="mb-3">
       {/* Tab 1: Clients Information */}
       <Tab eventKey="info" title="Clients Information">
+        <FilterBar
+          filters={filters}
+          searchPlaceholder="Search by name, email, or phone"
+          onFilterChange={handleFilterChange}
+          onSearchChange={handleSearchChange}
+          searchValue={searchQuery}
+        />
         <div className="table-responsive">
           <Table striped bordered hover>
             <thead>
@@ -132,7 +103,7 @@ const ClientsTable = () => {
               </tr>
             </thead>
             <tbody>
-              {clients.map((client) => (
+              {filteredClients.map((client) => (
                 <tr key={client.id}>
                   <td>{client.id}</td>
                   <td>{client.nombres}</td>
@@ -153,6 +124,13 @@ const ClientsTable = () => {
 
       {/* Tab 2: Clients State */}
       <Tab eventKey="state" title="Clients State">
+        <FilterBar
+          filters={filters}
+          searchPlaceholder="Search by address, city, or state"
+          onFilterChange={handleFilterChange}
+          onSearchChange={handleSearchChange}
+          searchValue={searchQuery}
+        />
         <div className="table-responsive">
           <Table striped bordered hover>
             <thead>
@@ -166,7 +144,7 @@ const ClientsTable = () => {
               </tr>
             </thead>
             <tbody>
-              {clients.map((client) => (
+              {filteredClients.map((client) => (
                 <tr key={client.id}>
                   <td>{client.id}</td>
                   <td>{client.direccion}</td>
@@ -187,6 +165,13 @@ const ClientsTable = () => {
 
       {/* Tab 3: Instructions for Each Service */}
       <Tab eventKey="instructions" title="Service Instructions">
+        <FilterBar
+          filters={filters}
+          searchPlaceholder="Search by frequency, hours, or instructions"
+          onFilterChange={handleFilterChange}
+          onSearchChange={handleSearchChange}
+          searchValue={searchQuery}
+        />
         <div className="table-responsive">
           <Table striped bordered hover>
             <thead>
@@ -204,7 +189,7 @@ const ClientsTable = () => {
               </tr>
             </thead>
             <tbody>
-              {clients.map((client) => (
+              {filteredClients.map((client) => (
                 <tr key={client.id}>
                   <td>{client.id}</td>
                   <td>{client.frecuenciaServicio}</td>
