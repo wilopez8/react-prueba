@@ -249,7 +249,7 @@ const Dashboard = () => {
               onSearchChange={handleSearchChange}
               searchValue={searchQuery}
             />
-            <Table striped bordered hover responsive>
+            <Table striped bordered hover responsive className="mt-3">
               <thead>
                 <tr>
                   <th>Date</th>

@@ -23,7 +23,7 @@ const ClientStates = ({ clients, filters, onFilterChange, onSearchChange, search
         searchValue={searchQuery}
       />
       <div className="table-responsive">
-        <Table striped bordered hover>
+        <Table striped bordered hover className="mt-3">
           <thead>
             <tr>
               <th>#</th>
