@@ -3,6 +3,7 @@
     overflow-x: auto;
   }
   
+
   /* Adjust font size for smaller screens */
   @media (max-width: 768px) {
     .table {

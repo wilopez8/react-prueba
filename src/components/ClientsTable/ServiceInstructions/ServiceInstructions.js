@@ -1,5 +1,6 @@
-import React from 'react';
-import { Table } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Table, Button } from 'react-bootstrap';
+import { FaPen, FaTrash } from 'react-icons/fa'; // Import icons
 import FilterBar from '../../Shared/FilterBar/FilterBar';
 
 const ServiceInstructions = ({ clients, filters, onFilterChange, onSearchChange, searchQuery }) => {
@@ -9,6 +10,18 @@ const ServiceInstructions = ({ clients, filters, onFilterChange, onSearchChange,
       client.indicacionesServicio.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesSearch;
   });
+
+  
+  const handleEdit = (client) => {
+    console.log('Edit client:', client);
+    // Add logic to handle editing the client
+  };
+
+  const handleDelete = (clientId) => {
+    console.log('Delete client with ID:', clientId);
+    // Add logic to handle deleting the client
+  };
+
 
   return (
     <>
@@ -33,6 +46,7 @@ const ServiceInstructions = ({ clients, filters, onFilterChange, onSearchChange,
               <th>Como Ingresar</th>
               <th>Horario Programacion</th>
               <th>Observacion de Atencion</th>
+              <th>Actions</th> {/* New Actions column */}
             </tr>
           </thead>
           <tbody>
@@ -48,6 +62,27 @@ const ServiceInstructions = ({ clients, filters, onFilterChange, onSearchChange,
                 <td>{client.comoIngresar}</td>
                 <td>{client.horarioProgramacion}</td>
                 <td>{client.observacionAtencion}</td>
+                <td>
+                  {/* Action buttons */}
+                  <Button
+                    variant="warning"
+                    size="sm"
+                    className="small-button me-1"
+                    style={{ padding: '1.5px 3.5px', fontSize: '12px' }} // Custom inline styles
+                    onClick={() => handleEdit(client)}
+                  >
+                    <FaPen />
+                  </Button>
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    className="small-button me-1"
+                    style={{ padding: '1.5px 3.5px', fontSize: '12px' }} // Custom inline styles
+                   onClick={() => handleDelete(client.id)}
+                  >
+                    <FaTrash />
+                  </Button>
+                </td>
               </tr>
             ))}
           </tbody>
