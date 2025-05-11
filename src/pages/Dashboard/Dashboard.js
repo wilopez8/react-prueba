@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Table, Form, InputGroup, Button, Badge, Tabs, Tab } from 'react-bootstrap';
-import FilterBar from '../../components/Shared/FilterBar/FilterBar'; // Import the reusable FilterBar component
-import './Dashboard.css'; // Import the updated CSS
+import { Container, Tabs, Tab } from 'react-bootstrap';
+import MetricsTab from '../../pages/Dashboard/MetricsTab/MetricsTab';
+import PendingTasksTab from '../../pages/Dashboard/PendingTasksTab/PendingTasksTab';
 
 const dailyServices = [
   {
@@ -39,6 +39,7 @@ const dailyServices = [
   },
 ];
 
+
 const pendingTasks = [
   {
     date: '2023-05-01',
@@ -63,11 +64,12 @@ const pendingTasks = [
   },
 ];
 
+
+
 const Dashboard = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState('metrics'); // Initialize activeTab state
-
+  const [activeTab, setActiveTab] = useState('metrics');
 
   const filters = [
     {
@@ -84,14 +86,10 @@ const Dashboard = () => {
     },
   ];
 
-  const handleFilterChange = (filterName, value) => {
-    if (filterName === 'status') {
+  const handleFilterChange = (name, value) => {
+    if (name === 'status') {
       setStatusFilter(value);
     }
-  };
-
-  const handleSearchChange = (value) => {
-    setSearchQuery(value);
   };
 
   const filteredTasks = pendingTasks.filter((task) => {
@@ -104,7 +102,6 @@ const Dashboard = () => {
     return matchesStatus && matchesSearch;
   });
 
-
   const filteredServices = dailyServices.filter((service) => {
     const matchesStatus = statusFilter === 'all' || service.status.toLowerCase() === statusFilter;
     const matchesSearch =
@@ -114,7 +111,6 @@ const Dashboard = () => {
     return matchesStatus && matchesSearch;
   });
 
-
   const totalServices = dailyServices.length;
   const totalHours = dailyServices.reduce((sum, service) => sum + service.totalHours, 0);
   const completedServices = dailyServices.filter((service) => service.status === 'Completed').length;
@@ -123,157 +119,29 @@ const Dashboard = () => {
   return (
     <Container className="dashboard-container">
       <h1 className="text-center my-4">Tablero de Control</h1>
-      <Tabs
-        activeKey={activeTab}
-        onSelect={(tab) => setActiveTab(tab)}
-        className="mb-3"
-      >
-        {/* Key Performance Metrics */}
+      <Tabs activeKey={activeTab} onSelect={(tab) => setActiveTab(tab)} className="mb-3">
         <Tab eventKey="metrics" title="Métricas Clave">
-          <Row className="mb-4">
-            <Col md={3}>
-              <div className="metric-card">
-                <h5>Total Services Scheduled</h5>
-                <p>{totalServices}</p>
-              </div>
-            </Col>
-            <Col md={3}>
-              <div className="metric-card">
-                <h5>Total Hours Scheduled</h5>
-                <p>{totalHours}</p>
-              </div>
-            </Col>
-            <Col md={3}>
-              <div className="metric-card">
-                <h5>Completed Services</h5>
-                <p>{completedServices}</p>
-              </div>
-            </Col>
-            <Col md={3}>
-              <div className="metric-card">
-                <h5>In-Progress Services</h5>
-                <p>{inProgressServices}</p>
-              </div>
-            </Col>
-          </Row>
-
-          {/* Daily Service List */}
-          <Row>
-            <Col>
-              <h2>Lista de Servicios</h2>
-
-              {/* Filters */}
-              <Row className="mb-3">
-                <Col md={4}>
-                  <Form.Select
-                    value={statusFilter}
-                    onChange={(e) => setStatusFilter(e.target.value)}
-                  >
-                    <option value="all">All</option>
-                    <option value="completed">Completed</option>
-                    <option value="in-progress">In-Progress</option>
-                    <option value="scheduled">Scheduled</option>
-                    <option value="delayed">Delayed</option>
-                  </Form.Select>
-                </Col>
-                <Col md={8}>
-                  <InputGroup>
-                    <Form.Control
-                      type="text"
-                      placeholder="Search by client, employee, or service type"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                    <Button variant="primary">Search</Button>
-                  </InputGroup>
-                </Col>
-              </Row>
-
-              {/* Service Table */}
-              <Table striped bordered hover responsive>
-                <thead>
-                  <tr>
-                    <th>Client</th>
-                    <th>Service Type</th>
-                    <th>Employee</th>
-                    <th>Scheduled Start</th>
-                    <th>Scheduled End</th>
-                    <th>Actual Start</th>
-                    <th>Actual End</th>
-                    <th>Total Hours</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredServices.map((service, idx) => (
-                    <tr key={idx}>
-                      <td>{service.client}</td>
-                      <td>{service.serviceType}</td>
-                      <td>{service.employee}</td>
-                      <td>{service.scheduledStart}</td>
-                      <td>{service.scheduledEnd}</td>
-                      <td>{service.actualStart || '-'}</td>
-                      <td>{service.actualEnd || '-'}</td>
-                      <td>{service.totalHours}</td>
-                      <td>
-                        <Badge
-                          bg={
-                            service.status === 'Completed'
-                              ? 'success'
-                              : service.status === 'In-Progress'
-                              ? 'warning'
-                              : service.status === 'Scheduled'
-                              ? 'info'
-                              : 'danger'
-                          }
-                        >
-                          {service.status}
-                        </Badge>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </Col>
-          </Row>
+          <MetricsTab
+            totalServices={totalServices}
+            totalHours={totalHours}
+            completedServices={completedServices}
+            inProgressServices={inProgressServices}
+            filteredServices={filteredServices}
+            filters={filters}
+            handleFilterChange={handleFilterChange}
+            handleSearchChange={setSearchQuery}
+            searchQuery={searchQuery}
+          />
         </Tab>
-
-{/* Pending Tasks Tab */}
-        <Tab eventKey= "Pendientes" title="Pendientes">
-          <div className="Pendientes-historicos">
-            <h3>Pendientes</h3>
-            <FilterBar
-              filters={filters}
-              searchPlaceholder="Search by responsible, task type, or description"
-              onFilterChange={handleFilterChange}
-              onSearchChange={handleSearchChange}
-              searchValue={searchQuery}
-            />
-            <Table striped bordered hover responsive className="mt-3">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Responsible</th>
-                  <th>Task Type</th>
-                  <th>Description</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredTasks.map((task, idx) => (
-                  <tr key={idx}>
-                    <td>{task.date}</td>
-                    <td>{task.responsible}</td>
-                    <td>{task.taskType}</td>
-                    <td>{task.description}</td>
-                    <td>{task.taskStatus}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
+        <Tab eventKey="Pendientes" title="Pendientes">
+          <PendingTasksTab
+            filters={filters}
+            handleFilterChange={handleFilterChange}
+            handleSearchChange={setSearchQuery}
+            searchQuery={searchQuery}
+            filteredTasks={filteredTasks}
+          />
         </Tab>
-
       </Tabs>
     </Container>
   );

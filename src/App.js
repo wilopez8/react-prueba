@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import NotFoundPage from './pages/NotFoundPage';
 import AgendaPage from './pages/AgendaPage/AgendaPage';
 import ClientsPage from './pages/ClientsPage';
+import CarteraPage from './pages/CarteraPage/CarteraPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import './App.css'; // Optional: for global styles
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/agenda" element={<AgendaPage />} />
           <Route path="/clients" element={<ClientsPage />} />
+          <Route path="/cartera" element={<CarteraPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>

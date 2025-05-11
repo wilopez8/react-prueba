@@ -2,15 +2,30 @@ import React, { useState } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import { FaPen, FaTrash } from 'react-icons/fa'; // Import icons
 import FilterBar from '../../Shared/FilterBar/FilterBar';
+import AddDataModal from '../../Shared/AddDataModal/AddDataModal';
 
 const ServiceInstructions = ({ clients, filters, onFilterChange, onSearchChange, searchQuery }) => {
+
+  const [showModal, setShowModal] = useState(false);
+
+  const fields = [
+    { name: 'frecuenciaServicio', label: 'Frecuencia del Servicio', type: 'text', required: true },
+    { name: 'horasContratadas', label: 'Horas Contratadas', type: 'text', required: true },
+    { name: 'valorServicio', label: 'Valor por Servicio', type: 'text', required: true },
+    { name: 'indicacionesServicio', label: 'Indicaciones del Servicio', type: 'text', required: true },
+    { name: 'claveConjuntos', label: 'Clave Conjuntos', type: 'text', required: true },
+    { name: 'clavesResidencia', label: 'Claves Residencia', type: 'text', required: true },
+    { name: 'comoIngresar', label: 'Como Ingresar', type: 'text', required: true },
+    { name: 'horarioProgramacion', label: 'Horario Programacion', type: 'text', required: true },
+    { name: 'observacionAtencion', label: 'Observacion de Atencion', type: 'text', required: true },
+  ];
+
   const filteredClients = clients.filter((client) => {
     const matchesSearch =
       client.frecuenciaServicio.toLowerCase().includes(searchQuery.toLowerCase()) ||
       client.indicacionesServicio.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesSearch;
   });
-
   
   const handleEdit = (client) => {
     console.log('Edit client:', client);
@@ -22,7 +37,6 @@ const ServiceInstructions = ({ clients, filters, onFilterChange, onSearchChange,
     // Add logic to handle deleting the client
   };
 
-
   return (
     <>
       <FilterBar
@@ -32,6 +46,13 @@ const ServiceInstructions = ({ clients, filters, onFilterChange, onSearchChange,
         onSearchChange={onSearchChange}
         searchValue={searchQuery}
       />
+
+      <div className="button-responsive mt-3">
+        <Button variant="primary" className="mb-3" onClick={() => setShowModal(true)}>
+          Ingresar Instrucciones
+        </Button>
+      </div>
+
       <div className="table-responsive">
         <Table striped bordered hover className="mt-3">
           <thead>
@@ -85,9 +106,14 @@ const ServiceInstructions = ({ clients, filters, onFilterChange, onSearchChange,
                 </td>
               </tr>
             ))}
-          </tbody>
+          </tbody>        
         </Table>
       </div>
+      <AddDataModal
+      show={showModal}
+      onHide={() => setShowModal(false)}
+      fields={fields}
+      />
     </>
   );
 };
